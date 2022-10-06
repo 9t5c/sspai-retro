@@ -1,12 +1,17 @@
 import "./style.css";
 
-const IMG_COUNT = 60,
+// browser refresh scroll top
+if (history.scrollRestoration) {
+  history.scrollRestoration = "manual";
+}
+
+const IMG_COUNT = 60, // number of images
   ctx: CanvasRenderingContext2D = document
     .querySelector<HTMLCanvasElement>("#canvas")!
-    .getContext("2d")!,
-  images: HTMLImageElement[] = [];
+    .getContext("2d")!, // canvas
+  images: HTMLImageElement[] = []; // list of images
 
-let loaded = 0;
+let loaded = 0; // loaded nums of images
 
 function loadImage(fn: Function) {
   for (let i = 0; i < IMG_COUNT; i++) {
@@ -32,7 +37,9 @@ loadImage(bootstrap);
 
 function bootstrap() {
   ctx.drawImage(images[0], 0, 0, 600, 600);
-  document.body.classList.add("scroll");
+
+  const mainEl = document.querySelector<HTMLDivElement>(".main")!;
+  mainEl.dataset.loading = "false";
 
   window.addEventListener("scroll", () => {
     let scrolled =
@@ -48,8 +55,11 @@ function bootstrap() {
 function changeFrame(frame: number) {
   let index = frame - 1;
   if (index < 0) index = 0;
-  if (index > IMG_COUNT) index = IMG_COUNT;
+  if (index > IMG_COUNT) index = IMG_COUNT - 1;
 
   ctx.clearRect(0, 0, 600, 600);
   ctx.drawImage(images[index], 0, 0, 600, 600);
 }
+
+// fix vite warning
+export {};

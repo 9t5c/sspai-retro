@@ -14,6 +14,7 @@
 
 body {
   margin: 0;
+  padding: 0;
   min-height: 100vh;
   background-image: url(https://cdn.sspai.com/preorder/macintoshcharger/build/static/media/bg-pattern-o-70.065e2f533e7a1ecba782.png);
   display: flex;
@@ -21,11 +22,49 @@ body {
   align-items: center;
 }
 
+.main[data-loading="true"] {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.main[data-loading="true"] {
+  display: grid;
+  place-items: center;
+}
+
+.main[data-loading="true"] .container,
+.main[data-loading="true"] .other {
+  display: none;
+}
+
+.loading-img {
+  animation: fade-in-out-opacity 1.5s linear infinite;
+}
+
+@keyframes fade-in-out-opacity {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.main[data-loading="false"] .loading-img {
+  display: none;
+}
+
 .container {
   max-width: 600px;
   margin: 0 auto;
+}
+
+.sticky {
   position: sticky;
   top: 0;
+  max-width: 600px;
+  max-height: 600px;
+  padding: 10%;
 }
 
 #canvas {
@@ -33,14 +72,13 @@ body {
   height: 100%;
 }
 
-.scroll {
-  height: 3000px;
+.other {
+  padding-top: 100px;
 }
 
-.ssp {
+.other footer {
   margin: 14px;
   padding-bottom: 16px;
-  margin-top: 3000px;
   text-align: center;
   font-size: 12px;
 }
