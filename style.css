@@ -1,0 +1,148 @@
+:root {
+  /* 背景色、背景图片 */
+  --background-color: #fffcee;
+  --background-image: url("https://cdn.sspai.com/preorder/macintoshcharger/build/static/media/bg-pattern-o-70.065e2f533e7a1ecba782.png");
+
+  /* loading 宽高 */
+  --loading-width: 80px;
+  --loading-height: var(--loading-width);
+
+  /* grid layout */
+  --max-screen: 65ch;
+  --padding-left-right: 20px;
+
+  /* font */
+  --font-family: "NotoSerif", "Times New Roman", "SimSun", "宋体", serif;
+  font-family: var(--font-family);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+  background-image: var(--background-image);
+  background-repeat: repeat;
+}
+figure {
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  /* 逻辑属性，请参考 https://www.zhangxinxu.com/wordpress/2018/10/diff-css-margin-inline-margin-block/ */
+  margin-block: 16px;
+  font-size: clamp(14px, 4vw, 16px);
+  line-height: 1.5;
+}
+
+/* grid layout   flull-bleed 概念请参考 https://www.joshwcomeau.com/css/full-bleed/ */
+.grid-layout {
+  max-width: var(--max-screen);
+  /* 水平居中 */
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns:
+    [full-start] var(--padding-left-right)
+    [content-start] 1fr
+    [content-end] var(--padding-left-right)
+    [full-end];
+}
+.grid-layout > * {
+  grid-column: content;
+}
+.full-bleed {
+  grid-column: full;
+}
+a {
+  text-decoration: underline;
+  color: #000;
+}
+a:hover {
+  color: rgba(0, 0, 0, 0.8);
+}
+a:active {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+/* loading 部分 */
+.loading {
+  /* 默认隐藏 */
+  display: none;
+  width: var(--loading-width);
+  height: var(--loading-height);
+  animation: fade-in-out-opacity 1.5s linear infinite;
+}
+@keyframes fade-in-out-opacity {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* 主体内容部分 */
+.retro-section figure {
+  margin-block-start: 56px;
+}
+.sticky {
+  max-width: 600px;
+  position: sticky;
+  top: 0;
+}
+#canvas {
+  width: 100%;
+  height: 100%;
+}
+h1.title {
+  margin-block-end: 200px;
+}
+h1.title > span {
+  display: block;
+}
+.title {
+  font-size: clamp(20px, 4vw, 28px);
+  font-weight: 600;
+  text-align: center;
+}
+
+/* other 内容部分 */
+.other-section {
+  margin-block-start: 100px;
+}
+.copyright {
+  font-size: 12px;
+  text-align: center;
+}
+
+/* main 上的 data-loading */
+.main[data-loading="true"] {
+  /* 铺满屏幕 */
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+
+  /* 让 loading 图片处于屏幕中心 */
+  display: grid;
+  place-items: center;
+}
+
+.main[data-loading="true"] .loading {
+  /* 显示 loading */
+  display: block;
+}
+.main[data-loading="true"] > .retro-section {
+  /* 隐藏主体内容 */
+  display: none;
+}
+.main[data-loading="true"] .other-section {
+  /* 隐藏 other */
+  display: none;
+}
